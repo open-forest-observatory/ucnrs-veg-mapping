@@ -1,0 +1,1 @@
+## Purpose: Process and compile the raw entered field data (field observations datasheets, Emlid RTK base and rover position data, Emlid RTK base corrections) into analysis-ready geospatial data frames

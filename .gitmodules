@@ -1,0 +1,5 @@
+[submodule "ucnrs-data"]
+	path = ucnrs-data
+	url = https://github.com/open-forest-observatory/ucnrs-data
+	datalad-id = 66353f1b-36d8-4c00-8f5b-510bdba0ffcf
+	datalad-url = https://github.com/open-forest-observatory/ucnrs-data

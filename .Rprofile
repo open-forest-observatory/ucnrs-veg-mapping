@@ -1,4 +1,4 @@
-# Also source the user's own .Rprofile if it exists
+# Source the user's own .Rprofile if it exists
 if (file.exists("~/.Rprofile")) {
     source("~/.Rprofile")
 }

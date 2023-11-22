@@ -148,6 +148,12 @@ gcps = gcps |>
            point_id = as.numeric(point_id),
            gcp_descr = str_remove_all(gcp, pattern = "#[0-9]+, |#[0-9]+ ")) |>
     select(-gcp)
+    
+# Fix a likely erroneous point ID recorded for a GCP. It was at reserve Q. It was recorded as
+# point_id 151, but that already exists and is a survey point. However, there are no survey points
+# for point_id 159, and the polygon this GCP is suppoed to be in (OC02) starts its surveys at point
+# 160, so we're assming this GCP is supposed to be point_id 159.
+gcps[gcps$point_id == 151 & gcps$reserve == "Q", "point_id"] = 159
 
 # Merge GCP descriptions wtih GCP locs
 gcps_w_locs = left_join(gcps, survey_locs, by = c("point_id", "reserve"))

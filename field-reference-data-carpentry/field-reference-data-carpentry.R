@@ -104,6 +104,10 @@ survey_obs[survey_obs$polygon_id == "BURN UNBURN GRASS 2 GRASS 3", "polygon_id"]
 
 # --- Prepare the survey point location data ---
 
+# Drop a likely erroneous point (uses same ID as a GCP)
+survey_obs = survey_obs |>
+    filter(!(point_id == 28 & reserve == "Q"))
+
 # Merge point coords into point obs
 survey_w_locs = left_join(survey_obs, survey_locs, by = c("point_id", "reserve"))
 

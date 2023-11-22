@@ -36,21 +36,21 @@ base = read_csv(file.path(datadir,
 
 # Field survey point locations (recorded using Emlids)
 locs1 = read_csv(file.path(datadir,
-                          "field-reference", "unprocessed",
-                          "emlid-points",
-                          "BORR.csv")) |>
+                           "field-reference", "unprocessed",
+                           "emlid-points",
+                           "BORR.csv")) |>
     mutate(reserve = "B")
 
 locs2 = read_csv(file.path(datadir,
-                          "field-reference", "unprocessed",
-                          "emlid-points",
-                          "Hastings.csv")) |>
+                           "field-reference", "unprocessed",
+                           "emlid-points",
+                           "Hastings.csv")) |>
     mutate(reserve = "H")
 
 locs3 = read_csv(file.path(datadir,
-                          "field-reference", "unprocessed",
-                          "emlid-points",
-                          "quail.csv")) |>
+                           "field-reference", "unprocessed",
+                           "emlid-points",
+                           "quail.csv")) |>
     mutate(reserve = "Q")
 
 survey_locs = bind_rows(locs1, locs2, locs3) |>
@@ -115,7 +115,7 @@ survey_w_locs = left_join(survey_w_locs, base_foc, by = "polygon_id")
 
 # --- Shift the survey point locations by the correction shifts ---
 survey_w_locs_sf = st_as_sf(survey_w_locs, coords = c("lon", "lat"), crs = 4326) |>
-  st_transform(3310)
+    st_transform(3310)
 
 coords = st_coordinates(survey_w_locs_sf)
 survey_w_locs$x_uncorr = coords[, 1]
@@ -125,8 +125,8 @@ survey_w_locs$x_corr = survey_w_locs$x_uncorr + survey_w_locs$shift_x
 survey_w_locs$y_corr = survey_w_locs$y_uncorr + survey_w_locs$shift_y
 
 survey_w_locs = survey_w_locs |>
-  select(-lon, -lat, -shift_x, -shift_y, -x_uncorr, -y_uncorr) |>
-  st_as_sf(coords = c("x_corr", "y_corr"), crs = 3310)
+    select(-lon, -lat, -shift_x, -shift_y, -x_uncorr, -y_uncorr) |>
+    st_as_sf(coords = c("x_corr", "y_corr"), crs = 3310)
 
 write_filepath = file.path(datadir, "field-reference", "for-analysis", "survey.gpkg")
 dir.create(dirname(write_filepath))
@@ -164,8 +164,8 @@ gcps_w_locs$y_corr = gcps_w_locs$y_uncorr + gcps_w_locs$shift_y
 
 # Drop intermediate columns, convert to spatial, and write
 gcps_w_locs_corr = gcps_w_locs |>
-  select(-lon, -lat, -shift_x, -shift_y, -x_uncorr, -y_uncorr) |>
-  st_as_sf(coords = c("x_corr", "y_corr"), crs = 3310)
+    select(-lon, -lat, -shift_x, -shift_y, -x_uncorr, -y_uncorr) |>
+    st_as_sf(coords = c("x_corr", "y_corr"), crs = 3310)
 
 gcps_w_locs_corr = st_as_sf(gcps_w_locs_corr, coords = c("x_corr", "y_corr"), crs = 3310)
 
